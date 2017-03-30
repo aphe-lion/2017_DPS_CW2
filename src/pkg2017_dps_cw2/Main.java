@@ -6,7 +6,7 @@
 package pkg2017_dps_cw2;
 
 /**
- *
+ * If this doesn't work I'll become an hero
  * @author tmitche1
  */
 public class Main {
