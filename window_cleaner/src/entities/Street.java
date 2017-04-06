@@ -5,7 +5,7 @@
  */
 package entities;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Street {
     private String name;
-    private ArrayList<House> houses; 
+    private Map<String, House> houses; 
 
     public String getName() {
         return name;
@@ -29,7 +29,7 @@ public class Street {
     /**
      * @return the houses
      */
-    public ArrayList<House> getHouses() {
+    public Map<String, House> getHouses() {
         return houses;
     }
 }

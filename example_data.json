@@ -1,8 +1,8 @@
-  [
-    {
+  {
+    "example street": {
       "name": "example street",
-      "houses": [
-        {
+      "houses": {
+        "5": {
           "number": "5",
           "cleanings-records": [
             { 
@@ -17,7 +17,7 @@
             }
           ]
         },
-        {
+        "7": {
           "number": "7",
           "cleanings-records": [
             { 
@@ -32,12 +32,12 @@
             }
           ]
         }
-      ]
+      }
     },
-    {
+    "example street 2": {
       "name": "example street 2",
-      "houses": [
-        {
+      "houses": {
+        "1": {
           "number": "1",
           "cleanings-records": [
             { 
@@ -52,7 +52,7 @@
             }
           ]
         },
-        {
+        "8": {
           "number": "8",
           "cleanings-records": [
             { 
@@ -67,6 +67,6 @@
             }
           ]
         }
-      ]
+      }
     }
-  ]
+  }

@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  */
 public class JsonDataReader {
     
-    private ArrayList<Street> streets;
+    private Map<String, Street> streets;
     private JsonReader reader = null;
     
     /**
@@ -37,13 +38,13 @@ public class JsonDataReader {
      * Reads JSON and store the data in ArrayList. To get it use getStreets() method.
      */
     public void readSteets(){
-        streets = new Gson().fromJson(reader, new TypeToken<ArrayList<Street>>(){}.getType());
+        streets = new Gson().fromJson(reader, new TypeToken<Map<String, Street>>(){}.getType());
     }
     
     /**
      * @return ArrayList containing all of the streets read from the JSON file;
      */
-    public ArrayList getStreets(){
+    public Map<String, Street> getStreets(){
         return streets;
     } 
 }
