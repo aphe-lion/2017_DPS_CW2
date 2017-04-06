@@ -5,18 +5,30 @@
  */
 package window_cleaner;
 
+import entities.CleaningRecord;
+import entities.House;
+import entities.Street;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.DefaultCellEditor;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author badan
  */
 public class GUImain extends javax.swing.JFrame {
-
+    
+    private Map streets = null;
+    private static final String[] labels = {"PAID", "NOT PAID", "NEXT TIME"};
+    
     /**
      * Creates new form GUImain
      */
-    public GUImain() {
+    GUImain(Map streets) {
+        this.streets = streets;
         initComponents();
     }
 
@@ -31,13 +43,14 @@ public class GUImain extends javax.swing.JFrame {
 
         statusComboBox = new javax.swing.JComboBox<>();
         streetLabel = new javax.swing.JLabel();
-        streetValueLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         balanceLabel = new javax.swing.JLabel();
         balanceValueLabel = new javax.swing.JLabel();
         optionalErrorMessage = new javax.swing.JLabel();
+        streetNameTextField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
 
         statusComboBox.setEditable(false);
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
@@ -45,8 +58,6 @@ public class GUImain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         streetLabel.setText("Street:");
-
-        streetValueLabel.setText("Richmond Road");
 
         table.setBackground(new java.awt.Color(237, 237, 237));
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -79,12 +90,18 @@ public class GUImain extends javax.swing.JFrame {
         jScrollPane3.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(statusComboBox));
-            table.getColumnModel().getColumn(3).setCellRenderer(null);
         }
 
         balanceLabel.setText("Balance:");
 
         balanceValueLabel.setText("0");
+
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +114,9 @@ public class GUImain extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(streetLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(streetValueLabel)
+                        .addComponent(streetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(balanceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -112,55 +131,33 @@ public class GUImain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(streetLabel)
-                    .addComponent(streetValueLabel)
                     .addComponent(balanceLabel)
-                    .addComponent(balanceValueLabel))
+                    .addComponent(balanceValueLabel)
+                    .addComponent(streetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(optionalErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
+        searchButton.getAccessibleContext().setAccessibleName("SearchButton");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger( GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        String searchText = streetNameTextField.getText();
+        if(streets.containsKey(searchText)){
+             redrawTable((Street)streets.get(searchText));
+             optionalErrorMessage.setText("");
+        }else{
+            optionalErrorMessage.setText(searchText + " street not found");
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUImain().setVisible(true);
-            }
-        });  
-    }
+    }//GEN-LAST:event_searchButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel balanceLabel;
@@ -168,9 +165,42 @@ public class GUImain extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel optionalErrorMessage;
+    private javax.swing.JButton searchButton;
     private javax.swing.JComboBox<String> statusComboBox;
     private javax.swing.JLabel streetLabel;
-    private javax.swing.JLabel streetValueLabel;
+    private javax.swing.JTextField streetNameTextField;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+
+    private void redrawTable(Street street) {
+        DefaultTableModel tModel = (DefaultTableModel) table.getModel();
+        tModel.setRowCount(0);
+        Iterator housesIterator = street.getHouses().values().iterator();
+        while(housesIterator.hasNext()){
+            House h = (House) housesIterator.next();
+            Iterator recordsIterator = h.getCleaningRecords().iterator();
+            while(recordsIterator.hasNext()){
+                CleaningRecord record = (CleaningRecord) recordsIterator.next();
+                Object houseNumber = h.getNumber();
+                Object price = record.getPrice();
+                Object date = formatDate(record.getDate());
+                Object label = formatLabel(record.getLabel());
+                tModel.addRow(new Object[]{ houseNumber, price, date, label});
+            }
+        }
+    }
+
+    private String formatPrice(double price) {
+        // TODO: I do not why I can not convert double to string
+        return Double.toString(price);
+    }
+
+    private String formatDate(long date) {
+        SimpleDateFormat formater = new SimpleDateFormat("d MMM yyyy");
+        return formater.format(new Date(date));
+    }
+
+    private String formatLabel(int label) {
+        return labels[label];
+    }
 }

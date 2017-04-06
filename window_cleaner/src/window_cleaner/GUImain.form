@@ -49,7 +49,9 @@
                   <Group type="102" attributes="0">
                       <Component id="streetLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="streetValueLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="streetNameTextField" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="searchButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="balanceLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -69,14 +71,15 @@
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="streetLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="streetValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="balanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="balanceValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="streetNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="searchButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane3" pref="364" max="32767" attributes="0"/>
+              <Component id="jScrollPane3" pref="352" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="optionalErrorMessage" min="-2" pref="20" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -88,11 +91,6 @@
     <Component class="javax.swing.JLabel" name="streetLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Street:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="streetValueLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Richmond Road"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -139,9 +137,7 @@
                   <Editor editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                     <Connection code="new DefaultCellEditor(statusComboBox)" type="code"/>
                   </Editor>
-                  <Renderer editor="org.netbeans.modules.form.ComponentChooserEditor">
-                    <ComponentRef name="null"/>
-                  </Renderer>
+                  <Renderer/>
                 </Column>
               </TableColumnModel>
             </Property>
@@ -166,6 +162,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="optionalErrorMessage">
+    </Component>
+    <Component class="javax.swing.JTextField" name="streetNameTextField">
+    </Component>
+    <Component class="javax.swing.JButton" name="searchButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Search"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="SearchButton"/>
+      </AccessibilityProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
