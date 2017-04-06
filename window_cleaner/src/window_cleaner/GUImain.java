@@ -29,6 +29,7 @@ public class GUImain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        statusComboBox = new javax.swing.JComboBox<>();
         streetLabel = new javax.swing.JLabel();
         streetValueLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -38,13 +39,16 @@ public class GUImain extends javax.swing.JFrame {
         balanceValueLabel = new javax.swing.JLabel();
         optionalErrorMessage = new javax.swing.JLabel();
 
+        statusComboBox.setEditable(false);
+        statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         streetLabel.setText("Street:");
 
         streetValueLabel.setText("Richmond Road");
 
-        table.setBackground(new java.awt.Color(211, 211, 211));
+        table.setBackground(new java.awt.Color(237, 237, 237));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -71,11 +75,11 @@ public class GUImain extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table.setGridColor(new java.awt.Color(205, 205, 205));
+        table.setGridColor(new java.awt.Color(237, 237, 237));
         jScrollPane3.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(2).setResizable(false);
-            table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
+            table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(statusComboBox));
+            table.getColumnModel().getColumn(3).setCellRenderer(null);
         }
 
         balanceLabel.setText("Balance:");
@@ -144,7 +148,7 @@ public class GUImain extends javax.swing.JFrame {
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUImain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -155,7 +159,7 @@ public class GUImain extends javax.swing.JFrame {
             public void run() {
                 new GUImain().setVisible(true);
             }
-        });
+        });  
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -164,6 +168,7 @@ public class GUImain extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel optionalErrorMessage;
+    private javax.swing.JComboBox<String> statusComboBox;
     private javax.swing.JLabel streetLabel;
     private javax.swing.JLabel streetValueLabel;
     private javax.swing.JTable table;

@@ -23,7 +23,7 @@ public class Window_cleaner {
      */
     public static void main(String[] args) {
         try {
-            JsonDataReader reader = new JsonDataReader("/home/sdgospod/2017_DPS_CW2/example_data.json");
+            JsonDataReader reader = new JsonDataReader("example_data.json");
             reader.readSteets();
             Map streets = reader.getStreets();
             String search = "example street";
