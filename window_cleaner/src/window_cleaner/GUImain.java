@@ -8,28 +8,35 @@ package window_cleaner;
 import entities.CleaningRecord;
 import entities.House;
 import entities.Street;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import javax.swing.DefaultCellEditor;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author badan
  */
-public class GUImain extends javax.swing.JFrame {
+public class GUImain extends javax.swing.JFrame implements TableModelListener{
     
     WindowController controller = null;
-    private static final String[] labels = {"PAID", "NOT PAID", "NEXT TIME"};
     
+    private static final String[] labels = {"PAID", "NOT PAID", "NEXT TIME"};
+    private HashMap<Integer, CleaningRecord> recordsIndexTable;
+    private static int recordsIndex = 0;
     /**
      * Creates new form GUImain
      */
     GUImain(WindowController controller) {
         this.controller = controller;
         initComponents();
+        table.getModel().addTableModelListener(this);
+        recordsIndexTable = new HashMap<Integer, CleaningRecord>();
     }
 
     /**
@@ -62,10 +69,7 @@ public class GUImain extends javax.swing.JFrame {
         table.setBackground(new java.awt.Color(237, 237, 237));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "House", "Price", "Date", "Staus"
@@ -150,13 +154,15 @@ public class GUImain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-//        String searchText = streetNameTextField.getText();
-//        if(streets.containsKey(searchText)){
-//             redrawTable((Street)streets.get(searchText));
-//             optionalErrorMessage.setText("");
-//        }else{
-//            optionalErrorMessage.setText(searchText + " street not found");
-//        }
+        String searchText = streetNameTextField.getText();
+        Street currentStreet = controller.findStreet(searchText);
+        if(currentStreet != null){
+             redrawTable(currentStreet);
+             optionalErrorMessage.setText("");
+        }else{
+            cleanTable();
+            optionalErrorMessage.setText(searchText + " street not found");
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -174,13 +180,15 @@ public class GUImain extends javax.swing.JFrame {
 
     private void redrawTable(Street street) {
         DefaultTableModel tModel = (DefaultTableModel) table.getModel();
-        tModel.setRowCount(0);
+        cleanTable();
         Iterator housesIterator = street.getHouses().values().iterator();
+        System.out.println(street.getHouses().size());
         while(housesIterator.hasNext()){
             House h = (House) housesIterator.next();
             Iterator recordsIterator = h.getCleaningRecords().iterator();
             while(recordsIterator.hasNext()){
                 CleaningRecord record = (CleaningRecord) recordsIterator.next();
+                recordsIndexTable.put(recordsIndex++, record);
                 Object houseNumber = h.getNumber();
                 Object price = record.getPrice();
                 Object date = formatDate(record.getDate());
@@ -202,5 +210,25 @@ public class GUImain extends javax.swing.JFrame {
 
     private String formatLabel(int label) {
         return labels[label];
+    }
+
+    private void cleanTable() {
+        ((DefaultTableModel)table.getModel()).setRowCount(0);
+        recordsIndexTable.clear();
+        recordsIndex = 0;
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        if(e.getType() == TableModelEvent.UPDATE){
+            int row = e.getLastRow();
+            int column = e.getColumn();
+            Object value = table.getModel().getValueAt(row, column);
+            try {
+                controller.editRecord(recordsIndexTable.get(row), column, value);
+            } catch (IOException ex) {
+                System.out.println(value);
+            }
+        }
     }
 }

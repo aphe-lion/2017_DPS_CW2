@@ -25,7 +25,7 @@ public class JsonDataWriter {
     
     public void saveData(StreetsSet streets) throws IOException{
         FileWriter fileOutputWriter = new FileWriter(fileName);
-        new Gson().toJson(streets, fileOutputWriter);
+        new Gson().toJson(streets.getStreets(), fileOutputWriter);
         fileOutputWriter.close();
     }
 }

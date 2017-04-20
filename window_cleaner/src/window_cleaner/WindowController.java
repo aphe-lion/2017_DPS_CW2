@@ -5,6 +5,11 @@
  */
 package window_cleaner;
 
+import entities.CleaningRecord;
+import entities.Street;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 
 /**
  *
@@ -14,8 +19,9 @@ public class WindowController {
     private WindowModel model;
     private GUImain view;
     
-    WindowController(WindowModel model) {
+    WindowController(WindowModel model) throws FileNotFoundException {
         this.model = model;
+        model.loadData();
         view = new GUImain(this);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -23,4 +29,31 @@ public class WindowController {
             }
         });
     }   
+
+    Street findStreet(String searchText) {
+        return model.getStreetByName(searchText);
+    }
+
+    void editRecord(CleaningRecord record, int column, Object value) throws IOException {
+        switch(column){
+            case 1:
+                model.updateCleaningRecordPrice(record, (Double)value);
+            break;
+            case 3:
+                int label = getLabel(value);
+                model.updateCleaningRecordLabel(record, label);
+        }
+//        System.out.println(record.getPrice());
+    }
+
+    private int getLabel(Object value) {
+        if ("PAID".equals((String)value)){
+            return 0;
+        }else if("NOT PAID".equals((String)value)){
+            return 1;
+        }else if("NEXT TIME".equals((String)value)){
+            return 2;
+        }
+        return -1;
+    }
 }
