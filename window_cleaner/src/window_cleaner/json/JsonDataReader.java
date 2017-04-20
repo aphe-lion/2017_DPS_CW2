@@ -9,10 +9,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import entities.Street;
+import entities.StreetsSet;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public class JsonDataReader {
     
-    private Map<String, Street> streets;
-    private JsonReader reader = null;
+    private StreetsSet streets = null;
+    private final String fileName;
     
     /**
      * @throws FileNotFoundException if file path is wrong 
@@ -31,20 +31,23 @@ public class JsonDataReader {
      * 
      */
     public JsonDataReader(String fileName) throws FileNotFoundException, IOException {
-        reader = new JsonReader(new FileReader(fileName));
+        this.fileName = fileName;
     }
     
     /**
      * Reads JSON and store the data in ArrayList. To get it use getStreets() method.
+     * @throws java.io.FileNotFoundException
      */
-    public void readSteets(){
-        streets = new Gson().fromJson(reader, new TypeToken<Map<String, Street>>(){}.getType());
+    public void readSteets() throws FileNotFoundException{
+        JsonReader reader = new JsonReader(new FileReader(fileName));
+        Map<String, Street> s = new Gson().fromJson(reader, new TypeToken<Map<String, Street>>(){}.getType());
+        streets = new StreetsSet(s);
     }
     
     /**
      * @return ArrayList containing all of the streets read from the JSON file;
      */
-    public Map<String, Street> getStreets(){
+    public StreetsSet getStreets(){
         return streets;
     } 
 }

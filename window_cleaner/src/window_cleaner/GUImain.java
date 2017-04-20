@@ -21,14 +21,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GUImain extends javax.swing.JFrame {
     
-    private Map streets = null;
+    WindowController controller = null;
     private static final String[] labels = {"PAID", "NOT PAID", "NEXT TIME"};
     
     /**
      * Creates new form GUImain
      */
-    GUImain(Map streets) {
-        this.streets = streets;
+    GUImain(WindowController controller) {
+        this.controller = controller;
         initComponents();
     }
 
@@ -150,13 +150,13 @@ public class GUImain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String searchText = streetNameTextField.getText();
-        if(streets.containsKey(searchText)){
-             redrawTable((Street)streets.get(searchText));
-             optionalErrorMessage.setText("");
-        }else{
-            optionalErrorMessage.setText(searchText + " street not found");
-        }
+//        String searchText = streetNameTextField.getText();
+//        if(streets.containsKey(searchText)){
+//             redrawTable((Street)streets.get(searchText));
+//             optionalErrorMessage.setText("");
+//        }else{
+//            optionalErrorMessage.setText(searchText + " street not found");
+//        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
