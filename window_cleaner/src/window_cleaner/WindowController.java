@@ -9,6 +9,7 @@ import entities.CleaningRecord;
 import entities.Street;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 
 
 /**
@@ -34,14 +35,19 @@ public class WindowController {
         return model.getStreetByName(searchText);
     }
 
-    void editRecord(CleaningRecord record, int column, Object value) throws IOException {
+    void editRecord(CleaningRecord record, int column, Object value) throws IOException, ParseException {
         switch(column){
             case 1:
                 model.updateCleaningRecordPrice(record, (Double)value);
-            break;
+                break;
+            case 2:
+                // dates
+                model.updateCleaningRecordDate(record, (String)value);
+                break;
             case 3:
                 int label = getLabel(value);
                 model.updateCleaningRecordLabel(record, label);
+                break;
         }
 //        System.out.println(record.getPrice());
     }

@@ -10,6 +10,8 @@ import entities.Street;
 import entities.StreetsSet;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import window_cleaner.json.JsonDataReader;
 import window_cleaner.json.JsonDataWriter;
 
@@ -18,11 +20,12 @@ import window_cleaner.json.JsonDataWriter;
  * @author sdgospod
  */
 public class WindowModel {
-    private final static String PATH = "/home/sdgospod/2017_DPS_CW2/temp.json";//must be set by hand for now;
+    //must be set by hand for now;
+    private final static String PATH = "/home/tmitche1/2017_DPS_CW2/example_data_test.json";
     private JsonDataReader dataReader = null;
     private JsonDataWriter dataWriter = null;
     private StreetsSet streets = null;
-    
+
     public WindowModel() throws IOException {
             dataReader = new JsonDataReader(PATH);
             dataWriter = new JsonDataWriter(PATH);
@@ -48,4 +51,11 @@ public class WindowModel {
         dataWriter.saveData(streets);
        }
     }
-}
+    
+    void updateCleaningRecordDate(CleaningRecord record, String dateString) throws IOException, ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy");
+        long dateTimestamp = formatter.parse(dateString).getTime();
+        record.setDate(dateTimestamp);
+        dataWriter.saveData(streets);    
+    }
+}s
