@@ -45,22 +45,20 @@
           <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
           <Component id="jScrollPane3" alignment="0" pref="754" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="streetLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="streetNameTextField" min="-2" pref="160" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="searchButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="balanceLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="balanceValueLabel" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="optionalErrorMessage" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="optionalErrorMessage" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -129,8 +127,10 @@
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
-                  <Editor/>
-                  <Renderer/>
+                  <Editor editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                    <Connection code="createCalenderMenu()" type="code"/>
+                  </Editor>
+                  <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor"/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>

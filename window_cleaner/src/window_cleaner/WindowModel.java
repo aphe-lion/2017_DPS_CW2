@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import window_cleaner.json.JsonDataReader;
 import window_cleaner.json.JsonDataWriter;
 
@@ -52,10 +53,11 @@ public class WindowModel {
        }
     }
     
-    void updateCleaningRecordDate(CleaningRecord record, String dateString) throws IOException, ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy");
-        long dateTimestamp = formatter.parse(dateString).getTime();
+    void updateCleaningRecordDate(CleaningRecord record, Date date) throws IOException, ParseException {
+        System.out.println(date.toString());
+        //SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy");
+        long dateTimestamp = date.getTime();
         record.setDate(dateTimestamp);
         dataWriter.saveData(streets);    
     }
-}s
+}

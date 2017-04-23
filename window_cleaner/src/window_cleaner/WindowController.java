@@ -10,6 +10,7 @@ import entities.Street;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 
 
 /**
@@ -42,7 +43,7 @@ public class WindowController {
                 break;
             case 2:
                 // dates
-                model.updateCleaningRecordDate(record, (String)value);
+                model.updateCleaningRecordDate(record, (Date)value);
                 break;
             case 3:
                 int label = getLabel(value);

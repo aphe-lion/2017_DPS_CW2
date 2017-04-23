@@ -9,6 +9,8 @@ import entities.CleaningRecord;
 import entities.House;
 import entities.Street;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 /**
  *
@@ -93,6 +96,8 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         table.setGridColor(new java.awt.Color(237, 237, 237));
         jScrollPane3.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(2).setCellEditor(createCalenderMenu());
+            table.getColumnModel().getColumn(2).setCellRenderer(null);
             table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(statusComboBox));
         }
 
@@ -114,20 +119,19 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(streetLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(streetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(balanceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(balanceValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(optionalErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(optionalErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,10 +165,18 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
              optionalErrorMessage.setText("");
         }else{
             cleanTable();
-            optionalErrorMessage.setText(searchText + " street not found");
+            optionalErrorMessage.setText("\"" + searchText +"\" not found");
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    // Creates a DatePickerCellEditor with some settings changed
+    private DatePickerCellEditor createCalenderMenu() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+        DatePickerCellEditor calenderMenu = new DatePickerCellEditor(dateFormat);
+        //System.out.println(calenderMenu.getClickCountToStart());
+        return calenderMenu;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JLabel balanceValueLabel;
@@ -226,9 +238,11 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             Object value = table.getModel().getValueAt(row, column);
             try {
                 controller.editRecord(recordsIndexTable.get(row), column, value);
+            } catch (ParseException ex) {
+                System.out.println("Not sure why this happened");
             } catch (IOException ex) {
                 System.out.println(value);
-            }
+            } 
         }
     }
 }
