@@ -5,16 +5,24 @@
  */
 package window_cleaner;
 
+import exceptions.HouseAlreadyExistsException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author badan
  */
 public class AddHouseWindow extends javax.swing.JFrame {
 
+    WindowController controller;
     /**
      * Creates new form AddHouseWindow
+     * @param controller
      */
-    public AddHouseWindow() {
+    public AddHouseWindow(WindowController controller) {
+        this.controller = controller;
         initComponents();
     }
 
@@ -28,28 +36,18 @@ public class AddHouseWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         addHouseLabel = new javax.swing.JLabel();
-        addPriceLabel = new javax.swing.JLabel();
-        addStateLabel = new javax.swing.JLabel();
         addHouseTextField = new javax.swing.JTextField();
-        addPriceTextField = new javax.swing.JTextField();
-        addStateComboBox = new javax.swing.JComboBox<>();
         addHouseSubmitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         addHouseLabel.setText("House:");
 
-        addPriceLabel.setText("Price:");
-
-        addStateLabel.setText("State:");
-
         addHouseTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addHouseTextFieldActionPerformed(evt);
             }
         });
-
-        addStateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
 
         addHouseSubmitButton.setText("Add House");
         addHouseSubmitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -66,17 +64,11 @@ public class AddHouseWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addHouseLabel)
-                            .addComponent(addPriceLabel)
-                            .addComponent(addStateLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(addHouseTextField)
-                            .addComponent(addPriceTextField)
-                            .addComponent(addStateComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(addHouseLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addHouseTextField))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 177, Short.MAX_VALUE)
                         .addComponent(addHouseSubmitButton)))
                 .addContainerGap())
         );
@@ -87,15 +79,7 @@ public class AddHouseWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addHouseLabel)
                     .addComponent(addHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addPriceLabel)
-                    .addComponent(addPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addStateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addStateLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addHouseSubmitButton)
                 .addContainerGap())
         );
@@ -108,51 +92,19 @@ public class AddHouseWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addHouseTextFieldActionPerformed
 
     private void addHouseSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHouseSubmitButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_addHouseSubmitButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddHouseWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddHouseWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddHouseWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddHouseWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            controller.addHouse(addHouseTextField.getText());
+            this.dispose();
+        } catch (IOException ex) {
+        } catch (HouseAlreadyExistsException ex) {
+            addHouseTextField.setText("This house already exists");
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddHouseWindow().setVisible(true);
-            }
-        });
-    }
+        
+    }//GEN-LAST:event_addHouseSubmitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addHouseLabel;
     private javax.swing.JButton addHouseSubmitButton;
     private javax.swing.JTextField addHouseTextField;
-    private javax.swing.JLabel addPriceLabel;
-    private javax.swing.JTextField addPriceTextField;
-    private javax.swing.JComboBox<String> addStateComboBox;
-    private javax.swing.JLabel addStateLabel;
     // End of variables declaration//GEN-END:variables
 }

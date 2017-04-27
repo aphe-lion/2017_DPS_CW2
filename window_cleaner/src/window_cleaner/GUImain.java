@@ -212,15 +212,15 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void addHouseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHouseButtonActionPerformed
-        new AddHouseWindow().setVisible(true);
+        new AddHouseWindow(controller).setVisible(true);
     }//GEN-LAST:event_addHouseButtonActionPerformed
 
     private void addRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordButtonActionPerformed
-        new AddRecordWindow().setVisible(true);
+        new AddRecordWindow(controller).setVisible(true);
     }//GEN-LAST:event_addRecordButtonActionPerformed
 
     private void addStreetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStreetButtonActionPerformed
-        new AddStreetWindow().setVisible(true);
+        new AddStreetWindow(controller).setVisible(true);
     }//GEN-LAST:event_addStreetButtonActionPerformed
 
     // Creates a DatePickerCellEditor with some settings changed

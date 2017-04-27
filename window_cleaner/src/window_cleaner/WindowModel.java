@@ -14,7 +14,6 @@ import exceptions.StreetAlreadyExistsException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import window_cleaner.json.JsonDataReader;
 import window_cleaner.json.JsonDataWriter;
@@ -25,7 +24,7 @@ import window_cleaner.json.JsonDataWriter;
  */
 public class WindowModel {
     //must be set by hand for now;
-    private final static String PATH = "~/2017_DPS_CW2/temp.json";
+    private final static String PATH = "/home/sdgospod/2017_DPS_CW2/temp.json";
     private JsonDataReader dataReader = null;
     private JsonDataWriter dataWriter = null;
     private StreetsSet streets = null;

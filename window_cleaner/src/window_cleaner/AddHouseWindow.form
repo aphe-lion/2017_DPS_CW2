@@ -26,21 +26,13 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="addHouseLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="addPriceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="addStateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="addHouseTextField" max="32767" attributes="0"/>
-                          <Component id="addPriceTextField" max="32767" attributes="0"/>
-                          <Component id="addStateComboBox" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="addHouseLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="addHouseTextField" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="177" max="32767" attributes="0"/>
                       <Component id="addHouseSubmitButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -56,17 +48,7 @@
                   <Component id="addHouseLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addHouseTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="addPriceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="addPriceTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="addStateComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="addStateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="48" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="addHouseSubmitButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -79,36 +61,10 @@
         <Property name="text" type="java.lang.String" value="House:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="addPriceLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Price:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="addStateLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="State:"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="addHouseTextField">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addHouseTextFieldActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="addPriceTextField">
-    </Component>
-    <Component class="javax.swing.JComboBox" name="addStateComboBox">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="PAID"/>
-            <StringItem index="1" value="NOT PAID"/>
-            <StringItem index="2" value="NEXT TIME"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="addHouseSubmitButton">
       <Properties>

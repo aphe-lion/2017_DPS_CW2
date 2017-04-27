@@ -84,12 +84,16 @@ public class WindowController {
     public void addStreet(String name) throws IOException, StreetAlreadyExistsException{
         Street newStreet = model.createNewStreet(name);
         currentStreet = newStreet;
-        view.displayMessage(newStreet.getName() + "street was created");
+        view.displayMessage(newStreet.getName() + " street was created");
         view.redrawTable();
     }
     
     public void addHouse(String number) throws IOException, HouseAlreadyExistsException{
         House newHouse = model.addHouseToSreet(currentStreet, number);
-        view.displayMessage(currentStreet.getName() + newHouse.getNumber() + "was added to ");
+        view.displayMessage(newHouse.getNumber() + " was added to " + currentStreet.getName());
+    }
+
+    Object[] getHousesForCurentStreet() {
+        return currentStreet.getHouses().keySet().toArray();
     }
 }

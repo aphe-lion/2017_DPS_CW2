@@ -5,16 +5,24 @@
  */
 package window_cleaner;
 
+import exceptions.StreetAlreadyExistsException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author badan
  */
 public class AddStreetWindow extends javax.swing.JFrame {
 
+    
+    WindowController controller = null;
     /**
      * Creates new form addStreetWindow
      */
-    public AddStreetWindow() {
+    public AddStreetWindow(WindowController controller) {
+        this.controller = controller;
         initComponents();
     }
 
@@ -71,7 +79,7 @@ public class AddStreetWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addStreetLabel)
                     .addComponent(addStreetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addStreetSubmitButton)
                 .addContainerGap())
         );
@@ -84,46 +92,14 @@ public class AddStreetWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addStreetTextFieldActionPerformed
 
     private void addStreetSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStreetSubmitButtonActionPerformed
+        try {
+            controller.addStreet(addStreetTextField.getText());
+        } catch (IOException ex) {
+        } catch (StreetAlreadyExistsException ex) {
+            addStreetTextField.setText("This street already exists");
+        }
         this.dispose();
     }//GEN-LAST:event_addStreetSubmitButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddStreetWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddStreetWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddStreetWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddStreetWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        //this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddStreetWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addStreetLabel;
