@@ -44,6 +44,8 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         initComponents();
         table.getModel().addTableModelListener(this);
         recordsIndexTable = new HashMap<Integer, CleaningRecord>();
+        addRecordButton.setVisible(false);
+        addHouseButton.setVisible(false);
     }
 
     /**
@@ -65,6 +67,9 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         optionalErrorMessage = new javax.swing.JLabel();
         streetNameTextField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
+        addStreetButton = new javax.swing.JButton();
+        addHouseButton = new javax.swing.JButton();
+        addRecordButton = new javax.swing.JButton();
 
         statusComboBox.setEditable(false);
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
@@ -86,16 +91,9 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Double.class, java.lang.Object.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         table.setGridColor(new java.awt.Color(237, 237, 237));
@@ -116,6 +114,27 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             }
         });
 
+        addStreetButton.setText("+ Street");
+        addStreetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStreetButtonActionPerformed(evt);
+            }
+        });
+
+        addHouseButton.setText("+ House");
+        addHouseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addHouseButtonActionPerformed(evt);
+            }
+        });
+
+        addRecordButton.setText("New Record");
+        addRecordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRecordButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,6 +145,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(optionalErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(134, 134, 134)
+                        .addComponent(addStreetButton))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(streetLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(streetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,7 +158,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                         .addComponent(balanceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(balanceValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(optionalErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addRecordButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addHouseButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,13 +176,20 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(optionalErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addHouseButton)
+                    .addComponent(addRecordButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(optionalErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addStreetButton))
                 .addContainerGap())
         );
 
         searchButton.getAccessibleContext().setAccessibleName("SearchButton");
+        addStreetButton.getAccessibleContext().setAccessibleName("AddStreetButton");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -167,13 +200,28 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         if (controller.getCurrentStreet() != null){
             redrawTable();
             displayMessage("");
-            //Show add street button
+            addRecordButton.setVisible(true);
+            addHouseButton.setVisible(true);
         } else {
             cleanTable();
             displayMessage("\"" + searchText +"\" not found");
             //Hide add street button
+            addRecordButton.setVisible(false);
+            addHouseButton.setVisible(false);
         }
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void addHouseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHouseButtonActionPerformed
+        new AddHouseWindow().setVisible(true);
+    }//GEN-LAST:event_addHouseButtonActionPerformed
+
+    private void addRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordButtonActionPerformed
+        new AddRecordWindow().setVisible(true);
+    }//GEN-LAST:event_addRecordButtonActionPerformed
+
+    private void addStreetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStreetButtonActionPerformed
+        new AddStreetWindow().setVisible(true);
+    }//GEN-LAST:event_addStreetButtonActionPerformed
 
     // Creates a DatePickerCellEditor with some settings changed
     private DatePickerCellEditor createCalenderMenu() {
@@ -183,6 +231,9 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addHouseButton;
+    private javax.swing.JButton addRecordButton;
+    private javax.swing.JButton addStreetButton;
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JLabel balanceValueLabel;
     private javax.swing.JScrollPane jScrollPane3;
@@ -212,12 +263,17 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 tModel.addRow(new Object[]{ houseNumber, price, date, label});
             }
         }
+        tModel.addRow(new Object[]{ null, null, null, null});
     }
     
     //private Street getCurrentStreet() {
     //    return controller.findStreet(streetNameTextField.getText());
     //}
 
+    private String formatHouseNumber(int houseNumber) {
+        return Integer.toString(houseNumber);
+    }
+    
     private String formatPrice(double price) {
         // TODO: I do not why I can not convert double to string
         return Double.toString(price);
@@ -246,6 +302,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             Object value = table.getModel().getValueAt(row, column);
             try {
                 // Edit record
+                System.out.println(column);
                 controller.editRecord(recordsIndexTable.get(row), column, value);
                 // Get the current street and redraw table
                 // It's a bit of a hack but w/e

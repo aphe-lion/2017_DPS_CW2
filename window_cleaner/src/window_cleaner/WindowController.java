@@ -42,6 +42,9 @@ public class WindowController {
 
     void editRecord(CleaningRecord record, int column, Object value) throws IOException, ParseException {
         switch(column){
+            case 0:
+                model.updateCleaningRecordHouseNumber(record, (Integer)value);
+                break;
             case 1:
                 model.updateCleaningRecordPrice(record, (Double)value);
                 break;
