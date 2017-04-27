@@ -16,6 +16,11 @@ public class House {
     private String number;
     private ArrayList<CleaningRecord> cleaningRecords;
 
+    public House(String number){
+        this.number = number;
+        cleaningRecords = new ArrayList<CleaningRecord>();
+    }
+
     /**
      * @return the number
      */

@@ -8,6 +8,8 @@ package window_cleaner;
 import entities.CleaningRecord;
 import entities.House;
 import entities.Street;
+import exceptions.HouseAlreadyExistsException;
+import exceptions.StreetAlreadyExistsException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -159,13 +163,15 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String searchText = streetNameTextField.getText();
-        Street currentStreet = controller.findStreet(searchText);
-        if (currentStreet != null){
-            redrawTable(currentStreet);
-            optionalErrorMessage.setText("");
+        controller.setCurrentStreet(controller.findStreet(searchText));
+        if (controller.getCurrentStreet() != null){
+            redrawTable();
+            displayMessage("");
+            //Show add street button
         } else {
             cleanTable();
-            optionalErrorMessage.setText("\"" + searchText +"\" not found");
+            displayMessage("\"" + searchText +"\" not found");
+            //Hide add street button
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -189,10 +195,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
-    private void redrawTable(Street street) {    
+    public void redrawTable() {    
         DefaultTableModel tModel = (DefaultTableModel) table.getModel();
         cleanTable();
-        Iterator housesIterator = street.getHouses().values().iterator();
+        Iterator housesIterator = controller.getCurrentStreet().getHouses().values().iterator();
         while(housesIterator.hasNext()){
             House h = (House) housesIterator.next();
             Iterator recordsIterator = h.getCleaningRecords().iterator();
@@ -244,13 +250,16 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 // Get the current street and redraw table
                 // It's a bit of a hack but w/e
                 String searchText = streetNameTextField.getText();
-                Street currentStreet = controller.findStreet(searchText);
-                redrawTable(currentStreet);
+                redrawTable();
             } catch (ParseException ex) {
                 System.out.println("Not sure why this happened");
             } catch (IOException ex) {
                 System.out.println(value);
             } 
         }
+    }
+
+    void displayMessage(String message) {
+        optionalErrorMessage.setText(message);
     }
 }

@@ -6,8 +6,11 @@
 package window_cleaner;
 
 import entities.CleaningRecord;
+import entities.House;
 import entities.Street;
 import entities.StreetsSet;
+import exceptions.HouseAlreadyExistsException;
+import exceptions.StreetAlreadyExistsException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,7 +25,7 @@ import window_cleaner.json.JsonDataWriter;
  */
 public class WindowModel {
     //must be set by hand for now;
-    private final static String PATH = "/home/tmitche1/2017_DPS_CW2/example_data_test.json";
+    private final static String PATH = "/home/sdgospod/2017_DPS_CW2/temp.json";
     private JsonDataReader dataReader = null;
     private JsonDataWriter dataWriter = null;
     private StreetsSet streets = null;
@@ -58,5 +61,25 @@ public class WindowModel {
         long dateTimestamp = date.getTime();
         record.setDate(dateTimestamp);
         dataWriter.saveData(streets);    
+    }
+
+    House addHouseToSreet(Street street, String number) throws IOException, HouseAlreadyExistsException {
+        if(street.getHouses().containsKey(number)){
+            throw new HouseAlreadyExistsException();
+        }
+        House house = new House(number);
+        street.getHouses().put(house.getNumber(), house);
+        dataWriter.saveData(streets);
+        return house;
+    }
+
+    Street createNewStreet(String name) throws IOException, StreetAlreadyExistsException {
+        if(streets.getStreets().containsKey(name)){
+            throw new StreetAlreadyExistsException();
+        }
+        Street street = new Street(name);
+        streets.getStreets().put(street.getName(), street);
+        dataWriter.saveData(streets);
+        return street;
     }
 }

@@ -6,7 +6,10 @@
 package window_cleaner;
 
 import entities.CleaningRecord;
+import entities.House;
 import entities.Street;
+import exceptions.HouseAlreadyExistsException;
+import exceptions.StreetAlreadyExistsException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -20,6 +23,7 @@ import java.util.Date;
 public class WindowController {
     private WindowModel model;
     private GUImain view;
+    private Street currentStreet = null;
     
     WindowController(WindowModel model) throws FileNotFoundException {
         this.model = model;
@@ -61,5 +65,28 @@ public class WindowController {
             return 2;
         }
         return -1;
+    }
+
+    /**
+     * @param currentStreet the currentStreet to set
+     */
+    public void setCurrentStreet(Street currentStreet) {
+        this.currentStreet = currentStreet;
+    }
+    
+    public Street getCurrentStreet() {
+        return currentStreet;
+    }
+
+    public void addStreet(String name) throws IOException, StreetAlreadyExistsException{
+        Street newStreet = model.createNewStreet(name);
+        currentStreet = newStreet;
+        view.displayMessage(newStreet.getName() + "street was created");
+        view.redrawTable();
+    }
+    
+    public void addHouse(String number) throws IOException, HouseAlreadyExistsException{
+        House newHouse = model.addHouseToSreet(currentStreet, number);
+        view.displayMessage(currentStreet.getName() + newHouse.getNumber() + "was added to ");
     }
 }

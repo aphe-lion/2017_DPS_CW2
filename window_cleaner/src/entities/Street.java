@@ -5,6 +5,7 @@
  */
 package entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,7 +14,12 @@ import java.util.Map;
  */
 public class Street {
     private String name;
-    private Map<String, House> houses; 
+    private HashMap<String, House> houses; 
+    
+    public Street(String name){
+        this.name = name;
+        houses = new HashMap<String, House>();
+    }
 
     public String getName() {
         return name;
