@@ -66,6 +66,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Payment tracker");
 
         streetLabel.setText("Street:");
 
@@ -97,7 +98,6 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         jScrollPane3.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(2).setCellEditor(createCalenderMenu());
-            table.getColumnModel().getColumn(2).setCellRenderer(null);
             table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(statusComboBox));
         }
 
