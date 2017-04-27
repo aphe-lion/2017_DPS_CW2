@@ -10,10 +10,25 @@ package entities;
  * @author sdgospod
  */
 public class CleaningRecord {
+    private int houseNumber;
     private long date;
     private double price;
     private int label;
 
+    /**
+     * @return the house number
+     */
+    public double getHouseNumber() {
+        return houseNumber;
+    }
+
+    /**
+     * @param houseNumber the house number to set
+     */
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+    
     /**
      * @return the date
      */

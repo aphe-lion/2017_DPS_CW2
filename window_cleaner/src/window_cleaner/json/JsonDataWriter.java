@@ -18,7 +18,6 @@ public class JsonDataWriter {
 
     private String fileName;
     
-    
     public JsonDataWriter(String fileName) throws IOException {
         this.fileName = fileName;
     }
