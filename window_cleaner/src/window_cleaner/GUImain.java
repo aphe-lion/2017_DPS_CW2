@@ -160,10 +160,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String searchText = streetNameTextField.getText();
         Street currentStreet = controller.findStreet(searchText);
-        if(currentStreet != null){
-             redrawTable(currentStreet);
-             optionalErrorMessage.setText("");
-        }else{
+        if (currentStreet != null){
+            redrawTable(currentStreet);
+            optionalErrorMessage.setText("");
+        } else {
             cleanTable();
             optionalErrorMessage.setText("\"" + searchText +"\" not found");
         }
@@ -173,7 +173,6 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private DatePickerCellEditor createCalenderMenu() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
         DatePickerCellEditor calenderMenu = new DatePickerCellEditor(dateFormat);
-        //System.out.println(calenderMenu.getClickCountToStart());
         return calenderMenu;
     }
     
@@ -190,11 +189,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
-    private void redrawTable(Street street) {
+    private void redrawTable(Street street) {    
         DefaultTableModel tModel = (DefaultTableModel) table.getModel();
         cleanTable();
         Iterator housesIterator = street.getHouses().values().iterator();
-        System.out.println(street.getHouses().size());
         while(housesIterator.hasNext()){
             House h = (House) housesIterator.next();
             Iterator recordsIterator = h.getCleaningRecords().iterator();
@@ -209,6 +207,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             }
         }
     }
+    
+    //private Street getCurrentStreet() {
+    //    return controller.findStreet(streetNameTextField.getText());
+    //}
 
     private String formatPrice(double price) {
         // TODO: I do not why I can not convert double to string
@@ -237,7 +239,13 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             int column = e.getColumn();
             Object value = table.getModel().getValueAt(row, column);
             try {
+                // Edit record
                 controller.editRecord(recordsIndexTable.get(row), column, value);
+                // Get the current street and redraw table
+                // It's a bit of a hack but w/e
+                String searchText = streetNameTextField.getText();
+                Street currentStreet = controller.findStreet(searchText);
+                redrawTable(currentStreet);
             } catch (ParseException ex) {
                 System.out.println("Not sure why this happened");
             } catch (IOException ex) {

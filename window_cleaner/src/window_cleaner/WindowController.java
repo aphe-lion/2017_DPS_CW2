@@ -46,8 +46,7 @@ public class WindowController {
                 model.updateCleaningRecordDate(record, (Date)value);
                 break;
             case 3:
-                int label = getLabel(value);
-                model.updateCleaningRecordLabel(record, label);
+                model.updateCleaningRecordLabel(record, getLabel(value));
                 break;
         }
 //        System.out.println(record.getPrice());

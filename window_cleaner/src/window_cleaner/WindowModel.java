@@ -47,15 +47,14 @@ public class WindowModel {
     }
 
     void updateCleaningRecordLabel(CleaningRecord record, int label) throws IOException {
-       if(label >= 0){
-        record.setLabel(label);
-        dataWriter.saveData(streets);
-       }
+        if (label >= 0){
+            record.setLabel(label);
+            dataWriter.saveData(streets);
+        }
     }
     
     void updateCleaningRecordDate(CleaningRecord record, Date date) throws IOException, ParseException {
-        System.out.println(date.toString());
-        //SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy");
+        //System.out.println(date.toString());
         long dateTimestamp = date.getTime();
         record.setDate(dateTimestamp);
         dataWriter.saveData(streets);    
