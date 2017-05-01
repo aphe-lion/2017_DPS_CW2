@@ -15,6 +15,11 @@ public class CleaningRecord {
     private double price;
     private int label;
 
+     public CleaningRecord(Double price, int label, long date) {
+        this.date = date;
+        this.price = price;
+        this.label = label;
+    }
     /**
      * @return the house number
      */

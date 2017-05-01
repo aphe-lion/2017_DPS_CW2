@@ -100,7 +100,11 @@ public class WindowController {
     Object[] getHousesForCurentStreet() {
         return currentStreet.getHouses().keySet().toArray();
     }
-    void addRecord(String house, Double price, String label, long timeInMillis) {
+    
+    void addRecord(String houseNumber, Double price, String label, long timeInMillis) throws IOException {
+        House house = currentStreet.getHouses().get(houseNumber);
+        model.addRecordToHouse(house, price, getLabel(label), timeInMillis);
+        view.redrawTable();
     }
     
     public void updateStreetComboBox () {

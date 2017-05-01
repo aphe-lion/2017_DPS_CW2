@@ -5,7 +5,11 @@
  */
 package window_cleaner;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import org.jdesktop.swingx.JXDatePicker;
 
 /**
@@ -149,12 +153,18 @@ public class AddRecordWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addHouseComboBoxActionPerformed
 
     private void addRecordSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordSubmitButtonActionPerformed
-        String house = addHouseComboBox.getSelectedItem().toString();
-        Double price = Double.valueOf(addPriceTextField.getText());
-        String label = addStateComboBox.getSelectedItem().toString();
-        long timeInMillis = datePicker.getDate().getTime();
-        controller.addRecord(house, price, label, timeInMillis);
-        this.dispose();
+        try {
+            String house = addHouseComboBox.getSelectedItem().toString();
+            Double price = Double.valueOf(addPriceTextField.getText());
+            String label = addStateComboBox.getSelectedItem().toString();
+            long timeInMillis = datePicker.getDate().getTime();
+            controller.addRecord(house, price, label, timeInMillis);
+            this.dispose();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Something went wrong! Pls restart the program", "Ops", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Price missing", "Ops", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_addRecordSubmitButtonActionPerformed
 
 
