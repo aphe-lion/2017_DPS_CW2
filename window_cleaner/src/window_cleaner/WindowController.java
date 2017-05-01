@@ -116,4 +116,11 @@ public class WindowController {
     public void removeSelectedStreet(String streetName) throws IOException {
         model.removeStreet(streetName);
     }
+
+    void removeRecord(String houseNumber, CleaningRecord record) throws IOException {
+       House house = currentStreet.getHouses().get(houseNumber);
+       model.deleteRecodFromHouse(house, record);
+       view.redrawTable();
+       view.refreshBalance();
+    }
 }

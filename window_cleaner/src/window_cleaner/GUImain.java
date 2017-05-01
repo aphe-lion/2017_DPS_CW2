@@ -15,8 +15,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -161,6 +164,11 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         });
 
         removeRecordButton.setText("Remove record");
+        removeRecordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRecordButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,7 +266,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             redrawTable();
             refreshBalance();
             displayMessage("");
-            addRecordButton.setVisible(controller.getCurrentStreet().hasHouses());
+            addRecordButton.setVisible(controller.getCurrentStreet().hasAnyHouses());
             addHouseButton.setVisible(true);
             removeStreetButton.setVisible(true); 
         }
@@ -276,8 +284,21 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     }//GEN-LAST:event_removeStreetButtonActionPerformed
 
     private void removeHouseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeHouseButtonActionPerformed
-        new RemoveHouseWindow()
+//        new RemoveHouseWindow();
     }//GEN-LAST:event_removeHouseButtonActionPerformed
+
+    private void removeRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRecordButtonActionPerformed
+        int row = table.getSelectedRow();
+        if(row == -1){
+           JOptionPane.showMessageDialog(null, "Select record first", "Ops", JOptionPane.INFORMATION_MESSAGE);
+       }else{
+           String houseNumber = (String)table.getModel().getValueAt(row, 0);
+           CleaningRecord record = recordsIndexTable.get(row);
+            try {
+                controller.removeRecord(houseNumber, record);
+            } catch (IOException ex) {}
+       }
+    }//GEN-LAST:event_removeRecordButtonActionPerformed
 
     private DatePickerCellEditor createCalenderMenu() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");

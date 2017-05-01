@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/sdgospod/2017_DPS_CW2/window_cleaner/src/window_cleaner/AddHouseWindow.java</file>
             <file>file:/home/sdgospod/2017_DPS_CW2/window_cleaner/src/window_cleaner/AddRecordWindow.java</file>
+            <file>file:/home/sdgospod/2017_DPS_CW2/window_cleaner/src/entities/Street.java</file>
+            <file>file:/home/sdgospod/2017_DPS_CW2/window_cleaner/src/window_cleaner/json/JsonDataReader.java</file>
             <file>file:/home/sdgospod/2017_DPS_CW2/window_cleaner/src/window_cleaner/GUImain.java</file>
+            <file>file:/home/sdgospod/2017_DPS_CW2/window_cleaner/src/window_cleaner/AddStreetWindow.java</file>
         </group>
     </open-files>
 </project-private>
