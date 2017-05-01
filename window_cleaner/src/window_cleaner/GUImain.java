@@ -70,6 +70,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         streetNameComboBox = new javax.swing.JComboBox<>();
         removeStreetButton = new javax.swing.JButton();
         removeHouseButton = new javax.swing.JButton();
+        removeRecordButton = new javax.swing.JButton();
 
         statusComboBox.setEditable(false);
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
@@ -159,6 +160,8 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             }
         });
 
+        removeRecordButton.setText("Remove record");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,23 +180,25 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                                         .addGap(215, 215, 215))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(streetNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(addStreetButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(addHouseButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(addRecordButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(removeHouseButton, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(removeStreetButton)
-                                        .addGap(21, 21, 21)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGap(67, 67, 67)
                                 .addComponent(balanceLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(balanceValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tableScrollPane))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(addStreetButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addHouseButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addRecordButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeHouseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeStreetButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeRecordButton)
+                                .addGap(126, 126, 126))))
+                    .addComponent(tableScrollPane, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -215,7 +220,8 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                         .addComponent(addStreetButton)
                         .addComponent(removeStreetButton)
                         .addComponent(addHouseButton)
-                        .addComponent(removeHouseButton)))
+                        .addComponent(removeHouseButton)
+                        .addComponent(removeRecordButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(optionalErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -241,18 +247,20 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private void streetNameComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_streetNameComboBoxActionPerformed
         String searchText = streetNameComboBox.getSelectedItem().toString();
         controller.setCurrentStreet(controller.findStreet(searchText));
-        if (controller.getCurrentStreet() != null){
-            redrawTable();
-            refreshBalance();
-            displayMessage("");
-            addRecordButton.setVisible(controller.getCurrentStreet().hasAnyHouses());
-            addHouseButton.setVisible(true);
-            removeStreetButton.setVisible(true);
-        } else if (searchText.equals("Pick a street...")) {
+        
+        if (searchText.equals("Pick a street...")) {
             cleanTable();
             displayMessage("Pick a street to start");
             addRecordButton.setVisible(false);
             addHouseButton.setVisible(false);
+            removeStreetButton.setVisible(false); 
+        } else { 
+            redrawTable();
+            refreshBalance();
+            displayMessage("");
+            addRecordButton.setVisible(controller.getCurrentStreet().hasHouses());
+            addHouseButton.setVisible(true);
+            removeStreetButton.setVisible(true); 
         }
     }//GEN-LAST:event_streetNameComboBoxActionPerformed
 
@@ -268,14 +276,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     }//GEN-LAST:event_removeStreetButtonActionPerformed
 
     private void removeHouseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeHouseButtonActionPerformed
-        //try {
-        //    controller.removeSelectedStreet(streetNameComboBox.getSelectedItem().toString());
-        //    updateStreetComboBox();
-        //    cleanTable();
-        //    addRecordButton.setVisible(false);
-        //    addHouseButton.setVisible(false);
-        //    removeStreetButton.setVisible(false);
-        //} catch (IOException e) {}
+        new RemoveHouseWindow()
     }//GEN-LAST:event_removeHouseButtonActionPerformed
 
     private DatePickerCellEditor createCalenderMenu() {
@@ -304,6 +305,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel optionalErrorMessage;
     private javax.swing.JButton removeHouseButton;
+    private javax.swing.JButton removeRecordButton;
     private javax.swing.JButton removeStreetButton;
     private javax.swing.JComboBox<String> statusComboBox;
     private javax.swing.JComboBox<String> streetNameComboBox;

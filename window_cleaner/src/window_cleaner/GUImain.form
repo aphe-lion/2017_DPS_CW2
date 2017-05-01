@@ -60,27 +60,29 @@
                                       <Component id="streetNameComboBox" min="-2" pref="202" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="addStreetButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="addHouseButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="addRecordButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="removeHouseButton" pref="145" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="removeStreetButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                               <Component id="balanceLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="balanceValueLabel" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="tableScrollPane" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="addStreetButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="addHouseButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="addRecordButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="removeHouseButton" min="-2" pref="133" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="removeStreetButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="removeRecordButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
+                  <Component id="tableScrollPane" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -107,6 +109,7 @@
                       <Component id="removeStreetButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="addHouseButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="removeHouseButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="removeRecordButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="14" max="32767" attributes="0"/>
@@ -250,6 +253,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeHouseButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="removeRecordButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Remove record"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
