@@ -104,4 +104,8 @@ public class WindowController {
     public void updateStreetComboBox () {
         view.updateStreetComboBox();
     }
+    
+    public void removeSelectedStreet(String streetName) {
+        model.removeStreet(streetName);
+    }
 }

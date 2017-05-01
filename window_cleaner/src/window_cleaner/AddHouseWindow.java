@@ -99,7 +99,6 @@ public class AddHouseWindow extends javax.swing.JFrame {
         } catch (HouseAlreadyExistsException ex) {
             addHouseTextField.setText("This house already exists");
         }
-        
     }//GEN-LAST:event_addHouseSubmitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

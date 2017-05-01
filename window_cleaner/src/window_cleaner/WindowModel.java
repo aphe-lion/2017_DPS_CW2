@@ -91,4 +91,9 @@ public class WindowModel {
     public StreetsSet getStreets() {
         return this.streets;
     }
+    
+    public void removeStreet(String streetName) throws IOException {
+        streets.removeStreet(streetName);
+        dataWriter.saveData(streets);
+    }
 }
