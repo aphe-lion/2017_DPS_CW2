@@ -55,4 +55,8 @@ public class Street {
         }
         return balance;
     }
+
+    public boolean hasAnyHouses() {
+        return houses.size() > 0;
+    }
 }

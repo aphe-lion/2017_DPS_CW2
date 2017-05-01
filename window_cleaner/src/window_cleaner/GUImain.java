@@ -217,17 +217,11 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             redrawTable();
             refreshBalance();
             displayMessage("");
-            addRecordButton.setVisible(true);
+            addRecordButton.setVisible(controller.getCurrentStreet().hasAnyHouses());
             addHouseButton.setVisible(true);
         } else if (searchText.equals("Pick a street...")) {
             cleanTable();
             displayMessage("Pick a street to start");
-            addRecordButton.setVisible(false);
-            addHouseButton.setVisible(false);
-        } else {
-            cleanTable();
-            displayMessage("\"" + searchText +"\" not found");
-            //Hide add street button
             addRecordButton.setVisible(false);
             addHouseButton.setVisible(false);
         }

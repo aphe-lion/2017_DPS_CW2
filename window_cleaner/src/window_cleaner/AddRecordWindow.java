@@ -164,6 +164,8 @@ public class AddRecordWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong! Pls restart the program", "Ops", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Price missing", "Ops", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NullPointerException ex){
+            JOptionPane.showMessageDialog(null, "Date missing", "Ops", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_addRecordSubmitButtonActionPerformed
 

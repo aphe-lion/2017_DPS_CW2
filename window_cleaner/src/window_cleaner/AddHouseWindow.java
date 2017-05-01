@@ -9,6 +9,7 @@ import exceptions.HouseAlreadyExistsException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -93,11 +94,17 @@ public class AddHouseWindow extends javax.swing.JFrame {
 
     private void addHouseSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHouseSubmitButtonActionPerformed
         try {
-            controller.addHouse(addHouseTextField.getText());
-            this.dispose();
+            String houseName = addHouseTextField.getText();
+            if(houseName.equals("")){
+                JOptionPane.showMessageDialog(null, "Fill the house number first", "Ops", JOptionPane.INFORMATION_MESSAGE);                
+            } else {
+                controller.addHouse(houseName);
+                this.dispose();
+            }
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Something went wrong! Pls restart the program", "Ops", JOptionPane.INFORMATION_MESSAGE);
         } catch (HouseAlreadyExistsException ex) {
-            addHouseTextField.setText("This house already exists");
+            JOptionPane.showMessageDialog(null, "This house alredy exists", "Ops", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }//GEN-LAST:event_addHouseSubmitButtonActionPerformed

@@ -5,10 +5,12 @@
  */
 package window_cleaner;
 
+import exceptions.HouseAlreadyExistsException;
 import exceptions.StreetAlreadyExistsException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -93,14 +95,19 @@ public class AddStreetWindow extends javax.swing.JFrame {
 
     private void addStreetSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStreetSubmitButtonActionPerformed
         try {
-            controller.addStreet(addStreetTextField.getText());
+            String streetName = addStreetTextField.getText();
+            if(streetName.equals("")){
+                JOptionPane.showMessageDialog(null, "Fill the street name first", "Ops", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                controller.addStreet(streetName);
+                controller.updateStreetComboBox();
+                this.dispose();
+            }
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Something went wrong! Pls restart the program", "Ops", JOptionPane.INFORMATION_MESSAGE);
         } catch (StreetAlreadyExistsException ex) {
-            addStreetTextField.setText("This street already exists");
+            JOptionPane.showMessageDialog(null, "This street alredy exists", "Ops", JOptionPane.INFORMATION_MESSAGE);
         }
-        controller.updateStreetComboBox();
-        
-        this.dispose();
     }//GEN-LAST:event_addStreetSubmitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
