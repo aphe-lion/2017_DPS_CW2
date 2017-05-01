@@ -91,9 +91,15 @@ public class WindowModel {
     public StreetsSet getStreets() {
         return this.streets;
     }
+
     
     public void removeStreet(String streetName) throws IOException {
         streets.removeStreet(streetName);
+    }
+        
+    void addRecordToHouse(House house, Double price, int label, long timeInMillis) throws IOException {
+        CleaningRecord record = new CleaningRecord(price, label, timeInMillis);
+        house.getCleaningRecords().add(record);
         dataWriter.saveData(streets);
     }
 }
