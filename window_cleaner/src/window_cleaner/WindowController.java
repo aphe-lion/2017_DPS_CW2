@@ -112,4 +112,8 @@ public class WindowController {
     public void updateStreetComboBox () {
         view.updateStreetComboBox();
     }
+    
+    public void removeSelectedStreet(String streetName) throws IOException {
+        model.removeStreet(streetName);
+    }
 }

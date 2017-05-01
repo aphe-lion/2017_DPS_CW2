@@ -24,7 +24,7 @@ import window_cleaner.json.JsonDataWriter;
  */
 public class WindowModel {
     //must be set by hand for now;
-    private final static String PATH = "/home/sdgospod/2017_DPS_CW2/temp.json";
+    private final static String PATH = "/home/tmitche1/2017_DPS_CW2/example_data_test.json";
     private JsonDataReader dataReader = null;
     private JsonDataWriter dataWriter = null;
     private StreetsSet streets = null;
@@ -92,6 +92,11 @@ public class WindowModel {
         return this.streets;
     }
 
+    
+    public void removeStreet(String streetName) throws IOException {
+        streets.removeStreet(streetName);
+    }
+        
     void addRecordToHouse(House house, Double price, int label, long timeInMillis) throws IOException {
         CleaningRecord record = new CleaningRecord(price, label, timeInMillis);
         house.getCleaningRecords().add(record);

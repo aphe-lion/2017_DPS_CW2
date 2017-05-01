@@ -18,6 +18,10 @@ public class StreetsSet implements Serializable{
     public StreetsSet(Map<String, Street> streets) {
         this.streets = streets;
     }
+    
+    public void removeStreet(String streetName) {
+        this.streets.remove(streetName);
+    }
 
     /**
      * @return the streets

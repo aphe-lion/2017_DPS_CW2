@@ -106,7 +106,6 @@ public class AddHouseWindow extends javax.swing.JFrame {
         } catch (HouseAlreadyExistsException ex) {
             JOptionPane.showMessageDialog(null, "This house alredy exists", "Ops", JOptionPane.INFORMATION_MESSAGE);
         }
-        
     }//GEN-LAST:event_addHouseSubmitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
