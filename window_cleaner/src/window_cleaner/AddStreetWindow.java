@@ -98,6 +98,8 @@ public class AddStreetWindow extends javax.swing.JFrame {
         } catch (StreetAlreadyExistsException ex) {
             addStreetTextField.setText("This street already exists");
         }
+        controller.updateStreetComboBox();
+        
         this.dispose();
     }//GEN-LAST:event_addStreetSubmitButtonActionPerformed
 

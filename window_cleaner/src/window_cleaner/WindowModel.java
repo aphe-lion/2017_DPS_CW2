@@ -24,10 +24,11 @@ import window_cleaner.json.JsonDataWriter;
  */
 public class WindowModel {
     //must be set by hand for now;
-    private final static String PATH = "/home/sdgospod/2017_DPS_CW2/temp.json";
+    private final static String PATH = "/home/tmitche1/2017_DPS_CW2/example_data_test.json";
     private JsonDataReader dataReader = null;
     private JsonDataWriter dataWriter = null;
     private StreetsSet streets = null;
+
 
     public WindowModel() throws IOException {
             dataReader = new JsonDataReader(PATH);
@@ -85,5 +86,9 @@ public class WindowModel {
         streets.getStreets().put(street.getName(), street);
         dataWriter.saveData(streets);
         return street;
+    }
+        
+    public StreetsSet getStreets() {
+        return this.streets;
     }
 }

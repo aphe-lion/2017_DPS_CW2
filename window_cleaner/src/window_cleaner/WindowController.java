@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
-
+import java.util.Map;
 
 /**
  *
@@ -38,6 +38,10 @@ public class WindowController {
 
     Street findStreet(String searchText) {
         return model.getStreetByName(searchText);
+    }
+    
+    public Map getAllStreets () {
+        return model.getStreets().getStreets();
     }
 
     void editRecord(CleaningRecord record, int column, Object value) throws IOException, ParseException {
@@ -95,5 +99,9 @@ public class WindowController {
 
     Object[] getHousesForCurentStreet() {
         return currentStreet.getHouses().keySet().toArray();
+    }
+    
+    public void updateStreetComboBox () {
+        view.updateStreetComboBox();
     }
 }

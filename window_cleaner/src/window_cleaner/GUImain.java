@@ -7,19 +7,15 @@ package window_cleaner;
 
 import entities.CleaningRecord;
 import entities.House;
-import entities.Street;
-import exceptions.HouseAlreadyExistsException;
-import exceptions.StreetAlreadyExistsException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Vector;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -46,6 +42,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         recordsIndexTable = new HashMap<Integer, CleaningRecord>();
         addRecordButton.setVisible(false);
         addHouseButton.setVisible(false);
+        displayMessage("Pick a street to start");
     }
 
     /**
@@ -58,26 +55,22 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private void initComponents() {
 
         statusComboBox = new javax.swing.JComboBox<>();
-        streetLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         balanceLabel = new javax.swing.JLabel();
         balanceValueLabel = new javax.swing.JLabel();
         optionalErrorMessage = new javax.swing.JLabel();
-        streetNameTextField = new javax.swing.JTextField();
-        searchButton = new javax.swing.JButton();
         addStreetButton = new javax.swing.JButton();
         addHouseButton = new javax.swing.JButton();
         addRecordButton = new javax.swing.JButton();
+        streetNameComboBox = new javax.swing.JComboBox<>();
 
         statusComboBox.setEditable(false);
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PAID", "NOT PAID", "NEXT TIME" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Payment tracker");
-
-        streetLabel.setText("Street:");
 
         table.setBackground(new java.awt.Color(237, 237, 237));
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -97,7 +90,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             }
         });
         table.setGridColor(new java.awt.Color(237, 237, 237));
-        jScrollPane3.setViewportView(table);
+        tableScrollPane.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(2).setCellEditor(createCalenderMenu());
             table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(statusComboBox));
@@ -107,31 +100,33 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
 
         balanceValueLabel.setText("0");
 
-        searchButton.setText("Search");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
-
-        addStreetButton.setText("+ Street");
+        addStreetButton.setText("New street");
         addStreetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addStreetButtonActionPerformed(evt);
             }
         });
 
-        addHouseButton.setText("+ House");
+        addHouseButton.setText("New house");
         addHouseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addHouseButtonActionPerformed(evt);
             }
         });
 
-        addRecordButton.setText("New Record");
+        addRecordButton.setText("New record");
         addRecordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addRecordButtonActionPerformed(evt);
+            }
+        });
+
+        streetNameComboBox.setModel(fillStreetPickerComboBox());
+        streetNameComboBox.setToolTipText("");
+        streetNameComboBox.setName(""); // NOI18N
+        streetNameComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                streetNameComboBoxActionPerformed(evt);
             }
         });
 
@@ -139,77 +134,57 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(optionalErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(134, 134, 134)
-                        .addComponent(addStreetButton))
+                        .addGap(203, 203, 203))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(streetLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(streetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchButton)
+                        .addComponent(streetNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(balanceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(balanceValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(addRecordButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addHouseButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addHouseButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addStreetButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE))
+                .addGap(189, 189, 189))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(streetLabel)
                     .addComponent(balanceLabel)
                     .addComponent(balanceValueLabel)
-                    .addComponent(streetNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton))
+                    .addComponent(streetNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addHouseButton)
-                    .addComponent(addRecordButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(optionalErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addRecordButton)
                     .addComponent(addStreetButton))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(optionalErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
-        searchButton.getAccessibleContext().setAccessibleName("SearchButton");
         addStreetButton.getAccessibleContext().setAccessibleName("AddStreetButton");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String searchText = streetNameTextField.getText();
-        controller.setCurrentStreet(controller.findStreet(searchText));
-        if (controller.getCurrentStreet() != null){
-            redrawTable();
-            displayMessage("");
-            addRecordButton.setVisible(true);
-            addHouseButton.setVisible(true);
-        } else {
-            cleanTable();
-            displayMessage("\"" + searchText +"\" not found");
-            //Hide add street button
-            addRecordButton.setVisible(false);
-            addHouseButton.setVisible(false);
-        }
-    }//GEN-LAST:event_searchButtonActionPerformed
 
     private void addHouseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHouseButtonActionPerformed
         new AddHouseWindow(controller).setVisible(true);
@@ -221,13 +196,47 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
 
     private void addStreetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStreetButtonActionPerformed
         new AddStreetWindow(controller).setVisible(true);
+
     }//GEN-LAST:event_addStreetButtonActionPerformed
 
-    // Creates a DatePickerCellEditor with some settings changed
+    private void streetNameComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_streetNameComboBoxActionPerformed
+        String searchText = streetNameComboBox.getSelectedItem().toString();
+        controller.setCurrentStreet(controller.findStreet(searchText));
+        if (controller.getCurrentStreet() != null){
+            redrawTable();
+            displayMessage("");
+            addRecordButton.setVisible(true);
+            addHouseButton.setVisible(true);
+        } else if (searchText.equals("Pick a street...")) {
+            cleanTable();
+            displayMessage("Pick a street to start");
+            addRecordButton.setVisible(false);
+            addHouseButton.setVisible(false);
+        } else {
+            cleanTable();
+            displayMessage("\"" + searchText +"\" not found");
+            //Hide add street button
+            addRecordButton.setVisible(false);
+            addHouseButton.setVisible(false);
+        }
+    }//GEN-LAST:event_streetNameComboBoxActionPerformed
+
     private DatePickerCellEditor createCalenderMenu() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
         DatePickerCellEditor calenderMenu = new DatePickerCellEditor(dateFormat);
         return calenderMenu;
+    }
+    
+    private DefaultComboBoxModel fillStreetPickerComboBox () {
+        Vector<String> streets = new Vector(1, 1);
+        streets.add("Pick a street...");
+        streets.addAll(controller.getAllStreets().keySet());
+        return new DefaultComboBoxModel(streets);
+        
+    }
+    
+    public void updateStreetComboBox() {
+        streetNameComboBox.setModel(fillStreetPickerComboBox());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -236,14 +245,12 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
     private javax.swing.JButton addStreetButton;
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JLabel balanceValueLabel;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel optionalErrorMessage;
-    private javax.swing.JButton searchButton;
     private javax.swing.JComboBox<String> statusComboBox;
-    private javax.swing.JLabel streetLabel;
-    private javax.swing.JTextField streetNameTextField;
+    private javax.swing.JComboBox<String> streetNameComboBox;
     private javax.swing.JTable table;
+    private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 
     public void redrawTable() {    
@@ -266,10 +273,6 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         tModel.addRow(new Object[]{ null, null, null, null});
     }
     
-    //private Street getCurrentStreet() {
-    //    return controller.findStreet(streetNameTextField.getText());
-    //}
-
     private String formatHouseNumber(int houseNumber) {
         return Integer.toString(houseNumber);
     }
@@ -306,7 +309,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 controller.editRecord(recordsIndexTable.get(row), column, value);
                 // Get the current street and redraw table
                 // It's a bit of a hack but w/e
-                String searchText = streetNameTextField.getText();
+                String searchText = streetNameComboBox.getSelectedItem().toString();
                 redrawTable();
             } catch (ParseException ex) {
                 System.out.println("Not sure why this happened");
