@@ -96,4 +96,8 @@ public class WindowController {
     Object[] getHousesForCurentStreet() {
         return currentStreet.getHouses().keySet().toArray();
     }
+
+    void addRecord(String house, Double price, String label, long timeInMillis) {
+        
+    }
 }
