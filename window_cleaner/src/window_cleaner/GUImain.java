@@ -7,6 +7,7 @@ package window_cleaner;
 
 import entities.CleaningRecord;
 import entities.House;
+import entities.Street;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -139,21 +140,21 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(optionalErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(203, 203, 203))
+                        .addGap(215, 215, 215))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(streetNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(balanceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(balanceValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(balanceValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(addRecordButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addHouseButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addStreetButton)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
@@ -204,6 +205,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
         controller.setCurrentStreet(controller.findStreet(searchText));
         if (controller.getCurrentStreet() != null){
             redrawTable();
+            refreshBalance();
             displayMessage("");
             addRecordButton.setVisible(true);
             addHouseButton.setVisible(true);
@@ -311,6 +313,7 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 // It's a bit of a hack but w/e
                 String searchText = streetNameComboBox.getSelectedItem().toString();
                 redrawTable();
+                refreshBalance();
             } catch (ParseException ex) {
                 System.out.println("Not sure why this happened");
             } catch (IOException ex) {
@@ -321,5 +324,9 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
 
     void displayMessage(String message) {
         optionalErrorMessage.setText(message);
+    }
+
+    public void refreshBalance() {
+        balanceValueLabel.setText(Double.toString(controller.getCurrentStreet().getBalance()));
     }
 }

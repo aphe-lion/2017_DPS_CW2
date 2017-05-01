@@ -90,6 +90,7 @@ public class WindowController {
         currentStreet = newStreet;
         view.displayMessage(newStreet.getName() + " street was created");
         view.redrawTable();
+        view.refreshBalance();
     }
     
     public void addHouse(String number) throws IOException, HouseAlreadyExistsException{
@@ -105,6 +106,7 @@ public class WindowController {
         House house = currentStreet.getHouses().get(houseNumber);
         model.addRecordToHouse(house, price, getLabel(label), timeInMillis);
         view.redrawTable();
+        view.refreshBalance();
     }
     
     public void updateStreetComboBox () {

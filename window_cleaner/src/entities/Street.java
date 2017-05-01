@@ -6,6 +6,7 @@
 package entities;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -37,5 +38,21 @@ public class Street {
      */
     public Map<String, House> getHouses() {
         return houses;
+    }
+
+    public double getBalance() {
+        double balance = 0;
+        Iterator housesIterator = houses.values().iterator();
+        while (housesIterator.hasNext()) {
+            House h = (House)housesIterator.next();
+            Iterator recordsIterator = h.getCleaningRecords().iterator();
+            while (recordsIterator.hasNext()) {
+                CleaningRecord record = (CleaningRecord)recordsIterator.next();
+                if(record.isPaid()){
+                    balance += record.getPrice();
+                }
+            }
+        }
+        return balance;
     }
 }

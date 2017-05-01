@@ -75,4 +75,8 @@ public class CleaningRecord {
     public void setLabel(int label) {
         this.label = label;
     }
+
+    public boolean isPaid() {
+        return label == 0;
+    }
 }
