@@ -31,8 +31,8 @@ public class WindowModel {
 
 
     public WindowModel() throws IOException {
-            dataReader = new JsonDataReader(PATH);
-            dataWriter = new JsonDataWriter(PATH);
+        dataReader = new JsonDataReader(PATH);
+        dataWriter = new JsonDataWriter(PATH);
     }
     
     public void loadData() throws FileNotFoundException{
@@ -92,7 +92,6 @@ public class WindowModel {
         return this.streets;
     }
 
-    
     public void removeStreet(String streetName) throws IOException {
         streets.removeStreet(streetName);
     }
@@ -100,6 +99,12 @@ public class WindowModel {
     void addRecordToHouse(House house, Double price, int label, long timeInMillis) throws IOException {
         CleaningRecord record = new CleaningRecord(price, label, timeInMillis);
         house.getCleaningRecords().add(record);
+        dataWriter.saveData(streets);
+    }
+    
+    public void removeHouse(String house, Street street) throws IOException {
+        //streets.
+        street.removeHouse(house);
         dataWriter.saveData(streets);
     }
 }

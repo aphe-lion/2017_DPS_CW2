@@ -56,7 +56,11 @@ public class Street {
         return balance;
     }
 
-    public boolean hasAnyHouses() {
+    public boolean hasHouses() {
         return houses.size() > 0;
+    }
+    
+    public void removeHouse(String house) {
+        houses.remove(house);
     }
 }
