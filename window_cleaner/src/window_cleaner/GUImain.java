@@ -85,14 +85,24 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Double.class, java.lang.Object.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         table.setGridColor(new java.awt.Color(237, 237, 237));
+        table.getTableHeader().setReorderingAllowed(false);
         tableScrollPane.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setCellRenderer(new HouseNumberRenderer());
+            table.getColumnModel().getColumn(1).setCellRenderer(new PriceRenderer());
             table.getColumnModel().getColumn(2).setCellEditor(createCalenderMenu());
             table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(statusComboBox));
         }
@@ -272,16 +282,10 @@ public class GUImain extends javax.swing.JFrame implements TableModelListener{
                 tModel.addRow(new Object[]{ houseNumber, price, date, label});
             }
         }
-        tModel.addRow(new Object[]{ null, null, null, null});
     }
     
     private String formatHouseNumber(int houseNumber) {
         return Integer.toString(houseNumber);
-    }
-    
-    private String formatPrice(double price) {
-        // TODO: I do not why I can not convert double to string
-        return Double.toString(price);
     }
 
     private String formatDate(long date) {
