@@ -24,7 +24,7 @@ import window_cleaner.json.JsonDataWriter;
  */
 public class WindowModel {
     //must be set by hand for now;
-    private final static String PATH = "/home/tmitche1/2017_DPS_CW2/example_data_test.json";
+    private final static String PATH = "/home/tmitche1/2017_DPS_CW2/data.json";
     private JsonDataReader dataReader = null;
     private JsonDataWriter dataWriter = null;
     private StreetsSet streets = null;
@@ -79,7 +79,7 @@ public class WindowModel {
     }
 
     Street createNewStreet(String name) throws IOException, StreetAlreadyExistsException {
-        if(streets.getStreets().containsKey(name)){
+        if (streets.getStreets().containsKey(name)){
             throw new StreetAlreadyExistsException();
         }
         Street street = new Street(name);
@@ -94,6 +94,7 @@ public class WindowModel {
 
     public void removeStreet(String streetName) throws IOException {
         streets.removeStreet(streetName);
+        dataWriter.saveData(streets);
     }
         
     void addRecordToHouse(House house, Double price, int label, long timeInMillis) throws IOException {
@@ -101,10 +102,14 @@ public class WindowModel {
         house.getCleaningRecords().add(record);
         dataWriter.saveData(streets);
     }
-    
+
     public void removeHouse(String house, Street street) throws IOException {
-        //streets.
         street.removeHouse(house);
+        dataWriter.saveData(streets);
+    }
+
+    void deleteRecordFromHouse(House house, CleaningRecord record) throws IOException {
+        house.getCleaningRecords().remove(record);
         dataWriter.saveData(streets);
     }
 }

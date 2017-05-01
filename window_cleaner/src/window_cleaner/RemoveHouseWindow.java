@@ -72,6 +72,7 @@ public class RemoveHouseWindow extends javax.swing.JFrame {
         try {
             controller.removeHouse(housePickerComboBox.getSelectedItem().toString());  
             this.dispose();
+            controller.redrawViewTable();
         } catch (IOException e) {}
     }//GEN-LAST:event_removeHouseButtonActionPerformed
 

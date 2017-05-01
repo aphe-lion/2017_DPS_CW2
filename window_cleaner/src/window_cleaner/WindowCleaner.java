@@ -20,7 +20,7 @@ public class WindowCleaner {
             WindowModel model = new WindowModel();
             WindowController controller = new WindowController(model);
         } catch (IOException ex) {
-            System.out.println("Something went wrong");
+            System.out.println("The path to your data.json file is probably set incorrectly");
         }
     }
     

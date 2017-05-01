@@ -92,12 +92,14 @@ public class WindowController {
         view.redrawTable();
         view.refreshBalance();
         updateButtons();
+        view.displayMessage("Street \" " + name + "\" added!");
     }
     
     public void addHouse(String number) throws IOException, HouseAlreadyExistsException{
         House newHouse = model.addHouseToSreet(currentStreet, number);
         view.displayMessage(newHouse.getNumber() + " was added to " + currentStreet.getName());
         updateButtons();
+        view.displayMessage("House \" " + number + "\" added!");
     }
 
     Object[] getHousesForCurentStreet() {
@@ -109,6 +111,7 @@ public class WindowController {
         model.addRecordToHouse(house, price, getLabel(label), timeInMillis);
         view.redrawTable();
         view.refreshBalance();
+        view.displayMessage("Record added!");
     }
     
     public void updateStreetComboBox () {
@@ -122,10 +125,24 @@ public class WindowController {
     public void removeSelectedStreet(String streetName) throws IOException {
         model.removeStreet(streetName);
         updateButtons();
+        view.displayMessage("Street \" " + streetName + "\" removed!");
     }
     
     public void removeHouse(String house) throws IOException {
         model.removeHouse(house, currentStreet);
         updateButtons();
+        view.displayMessage("House \" " + house + "\" removed!");
+    }
+
+    void removeRecord(String houseNumber, CleaningRecord record) throws IOException {
+       House house = currentStreet.getHouses().get(houseNumber);
+       model.deleteRecordFromHouse(house, record);
+       view.redrawTable();
+       view.refreshBalance();
+       view.displayMessage("Record rempoved!");
+    }
+    
+    void redrawViewTable() {
+        view.redrawTable();
     }
 }

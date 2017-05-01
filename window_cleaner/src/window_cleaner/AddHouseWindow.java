@@ -96,15 +96,15 @@ public class AddHouseWindow extends javax.swing.JFrame {
         try {
             String houseName = addHouseTextField.getText();
             if(houseName.equals("")){
-                JOptionPane.showMessageDialog(null, "Fill the house number first", "Ops", JOptionPane.INFORMATION_MESSAGE);                
+                JOptionPane.showMessageDialog(null, "Fill the house number first", "Oops", JOptionPane.INFORMATION_MESSAGE);                
             } else {
                 controller.addHouse(houseName);
                 this.dispose();
             }
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Something went wrong! Pls restart the program", "Ops", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Something went wrong! Please restart the program", "Oops", JOptionPane.INFORMATION_MESSAGE);
         } catch (HouseAlreadyExistsException ex) {
-            JOptionPane.showMessageDialog(null, "This house alredy exists", "Ops", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "This house alredy exists", "Oops", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_addHouseSubmitButtonActionPerformed
 
